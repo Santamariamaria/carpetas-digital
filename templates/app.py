@@ -9,13 +9,29 @@ def get_weather_data(city):
    API_KEY=config['API_KEY']
    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&lang=es&unit=metric'
    r=requests.get(url).json()
-   print(r)
    return r
 
 
-@app.route('/Angeles')
-def Angeles():
-    return get_weather_data('Guayaquil')
+@app.route('/prueba')
+def prueba():
+    clima= get_weather_data('Ambato')
+    print(clima)
+    weather={
+            'ciudad':'Ambato',
+            'temperatura': str( clima['main']['temp']),
+            'descripcion':str( clima['weather'][0]['description']),
+            'icono':str( clima['weather'][0]['icon']),
+            }
+    r_json= {
+            'ciudad':'Ambato',
+            'temperatura':'7.98°',
+            'descripcion':'descripcion',
+            'icono':'icono',
+             }
+    return render_template('Weather.html',clima=r_json)
+
+ 
+
 
 @app.route('/about')
 def about():
@@ -25,6 +41,11 @@ def about():
 @app.route('/clima')
 def clima():
     return'clima'
+
+@app.route('/Ange')
+def Ange():
+    return render_template('about.html')
+
 
 
 if __name__=='__main__':
